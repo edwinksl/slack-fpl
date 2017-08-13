@@ -32,7 +32,7 @@ def fpl():
                 manager = result['player_name']
                 gw = result['event_total']
                 tot = result['total']
-                row = str(rank) + ': ' + team + ' (' + manager + '), GW: ' + str(gw) + ', TOT: ' + str(tot) + '\n'
+                row = f'{rank}: {team} ({manager}), GW: {gw}, TOT: {tot}\n'
                 text += row
             payload_delayed = {'response_type': 'in_channel', 'text': text}
             r_delayed = requests.post(response_url, json=payload_delayed)
