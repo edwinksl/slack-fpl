@@ -19,6 +19,7 @@ MANAGER_WIDTH = 20
 GW_WIDTH = 5
 TOT_WIDTH = 5
 
+
 @app.route('/apps/slack-fpl', methods=['POST'])
 def fpl():
     if request.form['token'] == verification_token:
