@@ -13,6 +13,11 @@ dotenv.load_dotenv(dotenv_path)
 verification_token = os.environ['VERIFICATION_TOKEN']
 league_id = os.environ['LEAGUE_ID']
 
+RANK_WIDTH = 5
+TEAM_WIDTH = 20
+MANAGER_WIDTH = 20
+GW_WIDTH = 5
+TOT_WIDTH = 5
 
 @app.route('/apps/slack-fpl', methods=['POST'])
 def fpl():
@@ -25,15 +30,17 @@ def fpl():
             r_ack = requests.post(response_url, json=payload_ack)
             data = json.loads(r.text)
             results = data['standings']['results']
-            text = ''
+            header = f"{'Rank':<{RANK_WIDTH}}{'Team':<{TEAM_WIDTH}}{'Manager':<{MANAGER_WIDTH}}{'GW':<{GW_WIDTH}}{'TOT':<{TOT_WIDTH}}\n"
+            text = '```' + header
             for result in results:
                 rank = result['rank']
                 team = result['entry_name']
                 manager = result['player_name']
                 gw = result['event_total']
                 tot = result['total']
-                row = f'{rank}: {team} ({manager}), GW: {gw}, TOT: {tot}\n'
+                row = f'{rank:<{RANK_WIDTH}}{team:<{TEAM_WIDTH}}{manager:<{MANAGER_WIDTH}}{gw:<{GW_WIDTH}}{tot:<{TOT_WIDTH}}\n'
                 text += row
+            text += '```'
             payload_delayed = {'response_type': 'in_channel', 'text': text}
             r_delayed = requests.post(response_url, json=payload_delayed)
             return '', 200
