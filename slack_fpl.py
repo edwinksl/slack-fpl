@@ -70,9 +70,9 @@ def gameweek_info():
                 tz = pytz.timezone(timezone)
                 dt = datetime.datetime.fromtimestamp(deadline_time_epoch, tz)
                 times.append(dt.strftime(strftime_format))
-            return 'Current GW: ' + id_current + '\n' \
-                   + 'Next GW: ' + id_next + '\n' \
-                   + 'Deadline for GW ' + id_next + ': ' + ', '.join(times) + '\n'
+            return 'Current GW: ' + str(id_current) + '\n' \
+                   + 'Next GW: ' + str(id_next) + '\n' \
+                   + 'Deadline for GW ' + str(id_next) + ': ' + ', '.join(times) + '\n'
 
 
 if __name__ == '__main__':
