@@ -60,15 +60,19 @@ def gameweek_info():
     events_total = len(events)
     for i in range(events_total):
         event = events[i]
+        if event['is_current']:
+            id_current = event['id']
         if event['is_next']:
-            name = event['name']
+            id_next = event['id']
             deadline_time_epoch = event['deadline_time_epoch']
             times = []
             for timezone in timezones:
                 tz = pytz.timezone(timezone)
                 dt = datetime.datetime.fromtimestamp(deadline_time_epoch, tz)
                 times.append(dt.strftime(strftime_format))
-            return name + '\n' + 'Deadline: ' + ', '.join(times) + '\n'
+            return 'Current GW: ' + id_current + '\n' \
+                   + 'Next GW: ' + id_next + '\n' \
+                   + 'Deadline for GW ' + id_next + ': ' + ', '.join(times) + '\n'
 
 
 if __name__ == '__main__':
